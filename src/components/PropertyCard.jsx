@@ -10,13 +10,13 @@ import { LuMail } from "react-icons/lu";
 
 export default function PropertyCard() {
   return (
-    <div className="rounded-2xl bg-white shadow overflow-hidden ">
+    <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow">
       
       <div className="relative">
         <img
           src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80"
           alt="Sedra — North Riyadh"
-          className="w-full h-52 object-cover"
+          className="h-48 w-full object-cover sm:h-52"
         />
 
        
@@ -32,13 +32,13 @@ export default function PropertyCard() {
         </span>
 
       
-        <span className="absolute bottom-3 left-3 text-white font-bold text-lg drop-shadow-md">
+        <span className="absolute bottom-3 left-3 text-base font-bold text-white drop-shadow-md sm:text-lg">
           SAR 1,200,000
         </span>
       </div>
 
   
-      <div className="px-5 py-4 flex flex-col gap-3">
+      <div className="flex flex-1 flex-col gap-3 px-4 py-4 sm:px-5">
        
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-1 text-[10px] font-semibold text-[#c4674a] border border-[#c4674a]/30 bg-[#c4674a]/10 px-2 py-0.5 rounded-full">
@@ -89,17 +89,17 @@ export default function PropertyCard() {
         </div>
 
 
-        <div className="flex gap-2 pt-1">
+        <div className="mt-auto flex gap-2 pt-1">
           <a
             href="tel:+966500000000"
-            className="flex-1 flex items-center justify-center gap-1.5 border border-slate-200 text-slate-700 text-sm font-semibold py-2.5 rounded-xl"
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-slate-200 py-2.5 text-xs font-semibold text-slate-700 sm:text-sm"
           >
             <LuPhone className="w-4 h-4" />
             Call
           </a>
           <a
             href="mailto:agent@example.com"
-            className="flex-1 flex items-center justify-center gap-1.5 border border-slate-200 text-slate-700 text-sm font-semibold py-2.5 rounded-xl"
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-slate-200 py-2.5 text-xs font-semibold text-slate-700 sm:text-sm"
           >
             <LuMail className="w-4 h-4" />
             Email
@@ -108,7 +108,8 @@ export default function PropertyCard() {
             href="https://wa.me/966500000000"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 bg-[#c4674a] text-white text-sm font-semibold py-2.5 rounded-xl"
+            aria-label="WhatsApp"
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#c4674a] py-2.5 text-sm font-semibold text-white"
           >
             <LuMessageCircle className="w-4 h-4" />
           </a>

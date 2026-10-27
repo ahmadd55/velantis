@@ -1,4 +1,5 @@
-import heroImage from "../assets/hero.avif"; 
+const heroImage =
+  "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=1920&q=80"; 
 
 export default function Hero() {
   return (

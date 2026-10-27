@@ -13,16 +13,30 @@ export default function Property() {
   const coverRef = useRef(null);
 
   useEffect(() => {
-    const trigger = ScrollTrigger.create({
-      trigger: heroRef.current,
-      start: "top top",
-      endTrigger: coverRef.current,
-      end: "top top",
-      pin: true,
-      pinSpacing: false,
-    });
+    const hero = heroRef.current;
+    const cover = coverRef.current;
+    if (!hero || !cover) return undefined;
 
-    return () => trigger.kill();
+    const mm = gsap.matchMedia();
+
+    mm.add(
+      "(min-width: 1024px) and (min-height: 800px) and (prefers-reduced-motion: no-preference)",
+      () => {
+        const trigger = ScrollTrigger.create({
+          trigger: hero,
+          start: "top top",
+          endTrigger: cover,
+          end: "top top",
+          pin: true,
+          pinSpacing: false,
+          anticipatePin: 1,
+        });
+
+        return () => trigger.kill();
+      },
+    );
+
+    return () => mm.revert();
   }, []);
 
   return (
@@ -33,46 +47,51 @@ export default function Property() {
 
       <div
         ref={coverRef}
-        className="relative z-10 rounded-t-3xl flex flex-col justify-center bg-[#faf8f5] gap-6 px-40 py-16"
+        className="relative z-10 flex flex-col gap-6 rounded-t-3xl bg-[#faf8f5] px-4 py-12 sm:px-6 md:px-10 md:py-16 lg:px-16 xl:px-20"
       >
-        <div className="self-start inline-flex rounded-full border border-gray-300 px-3 py-1 items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c4674a]"></span>
-          <span className="uppercase text-[#3ab5a5] font-semibold">
+        <div className="inline-flex items-center gap-2 self-start rounded-full border border-gray-300 px-3 py-1">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#c4674a]" />
+          <span className="text-xs font-semibold uppercase text-[#3ab5a5] sm:text-sm">
             Featured resale
           </span>
         </div>
-        <h1 className="text-4xl font-extrabold">Properties for sale</h1>
-        <div className="h-1 w-12 rounded-[2px] border bg-black"></div>
-        <p className="text-[#6e6558] text-lg">
+        <h1 className="mt-6 text-3xl font-extrabold leading-tight sm:mt-8 sm:text-4xl">
+          Properties for sale
+        </h1>
+        <div className="h-1 w-12 rounded-sm bg-black" />
+        <p className="max-w-3xl text-base text-[#6e6558] sm:text-lg">
           Hand-picked listings from verified sellers across Saudi Arabia
         </p>
-        <div className="grid grid-cols-3 gap-7">
-          <PropertyCard />
-          <PropertyCard />
-          <PropertyCard />
-          <PropertyCard />
-          <PropertyCard />
-          <PropertyCard />
+        <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 6 }, (_, index) => (
+            <PropertyCard key={index} />
+          ))}
         </div>
       </div>
 
-      <div className="relative z-10 flex justify-center py-30 bg-[#f2ede5]">
-        <MortageCard />
+      <div className="relative z-10 bg-[#f2ede5] px-4 py-14 sm:px-6 md:px-10 md:py-20">
+        <div className="mx-auto w-full max-w-5xl">
+          <MortageCard />
+        </div>
       </div>
 
-      <div className="relative z-10 py-20 flex flex-col justify-center items-center bg-[#f2ede5] gap-6">
-        <h1 className="text-4xl font-extrabold">What our clients say</h1>
-        <div className="h-1 w-12 rounded-[2px] border bg-black"></div>
-        <p className="text-[#6e6558] text-lg">
+      <div className="relative z-10 flex flex-col items-center bg-[#f2ede5] px-4 py-14 sm:px-6 md:px-10 md:py-20">
+        <h2 className="text-center text-3xl font-extrabold sm:text-4xl">
+          What our clients say
+        </h2>
+        <div className="mt-4 h-1 w-12 rounded-sm bg-black" />
+        <p className="mt-4 text-center text-base text-[#6e6558] sm:text-lg">
           Real experiences from satisfied customers across Saudi Arabia
         </p>
-        <div className="flex gap-7 mt-8">
-          <ClientCard />
-          <ClientCard />
-          <ClientCard />
+        <div className="mt-8 grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 3 }, (_, index) => (
+            <ClientCard key={index} />
+          ))}
         </div>
-
-        <button className="rounded-xl bg-white font-semibold px-7 py-4 mt-5">
+        <button
+          type="button"
+          className="mt-8 rounded-xl bg-white px-7 py-4 text-center font-semibold"
+        >
           View all properties
         </button>
       </div>

@@ -10,7 +10,7 @@ export default function InsightStatCard({
   const isUp = trend === "up";
 
   return (
-    <div className="bg-white rounded-2xl shadow p-5 flex flex-col gap-3">
+    <div className="flex h-full flex-col gap-3 rounded-2xl bg-white p-4 shadow sm:p-5">
 
     
       <div className="flex items-center justify-between">
@@ -26,14 +26,14 @@ export default function InsightStatCard({
               : "text-red-500 bg-red-50 border border-red-200"
           }`}
         >
-          {isUp ? <LuTrendingUp className="w-3 h-3" /> : <LuTrendingDown className="w-3 h-3" />}
+          {isUp ? <LuTrendingUp className="h-3 w-3" /> : <LuTrendingDown className="h-3 w-3" />}
           {isUp ? "Up" : "Down"}
         </span>
       </div>
 
       <p className="text-sm mt-3 text-slate-500 leading-snug">{label}</p>
 
-      <p className="text-3xl mt-5 font-bold text-slate-800 tracking-tight">{value}</p>
+      <p className="mt-5 text-2xl font-bold tracking-tight break-words text-slate-800 sm:text-3xl">{value}</p>
 
     </div>
   );

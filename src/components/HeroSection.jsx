@@ -6,104 +6,104 @@ import TrustBar from "./TrustBar";
 gsap.registerPlugin(SplitText);
 
 export default function HeroSection() {
-
   const headingLine1Ref = useRef(null);
-  const kingdomRef      = useRef(null);
-  const badgeRef        = useRef(null);
-  const descRef         = useRef(null);
-  const buttonsRef      = useRef(null);
-  const statsRef        = useRef(null);
+  const kingdomRef = useRef(null);
+  const badgeRef = useRef(null);
+  const descRef = useRef(null);
+  const buttonsRef = useRef(null);
+  const statsRef = useRef(null);
 
   useEffect(() => {
+    const mm = gsap.matchMedia();
+    const sequence = [
+      badgeRef.current,
+      headingLine1Ref.current,
+      kingdomRef.current,
+      descRef.current,
+      buttonsRef.current,
+      statsRef.current,
+    ];
 
-    const split = new SplitText(headingLine1Ref.current, { type: "chars" });
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(sequence, { opacity: 1, y: 0 });
+    });
 
-    const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.6 } });
+    mm.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
+      const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.45 } });
+      tl.from(sequence, { opacity: 0, y: 16, stagger: 0.06 });
+      return () => tl.kill();
+    });
 
-    // 1. Badge sabse pehle
-    tl.from(badgeRef.current, { opacity: 0, y: 20 })
+    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+      const split = new SplitText(headingLine1Ref.current, { type: "chars" });
+      const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.6 } });
 
-    // 2. Heading line 1 — char by char
-    .from(split.chars, {
-      opacity: 0,
-      y: 30,
-      stagger: 0.03,
-      duration: 0.8,
-    }, "-=0.2")
+      tl.from(badgeRef.current, { opacity: 0, y: 20 })
+        .from(
+          split.chars,
+          { opacity: 0, y: 24, stagger: 0.025, duration: 0.7 },
+          "-=0.2",
+        )
+        .from(kingdomRef.current, { opacity: 0, y: 24 }, "-=0.3")
+        .from(descRef.current, { opacity: 0, y: 18 }, "-=0.2")
+        .from(buttonsRef.current, { opacity: 0, y: 18 }, "-=0.2")
+        .from(statsRef.current, { opacity: 0, y: 18 }, "-=0.2");
 
-    // 3. Kingdom
-    .from(kingdomRef.current, { opacity: 0, y: 30 }, "-=0.3")
+      return () => {
+        tl.kill();
+        split.revert();
+      };
+    });
 
-    // 4. Description
-    .from(descRef.current, { opacity: 0, y: 20 }, "-=0.2")
-
-    // 5. Buttons
-    .from(buttonsRef.current, { opacity: 0, y: 20 }, "-=0.2")
-
-    // 6. Stats
-    .from(statsRef.current, { opacity: 0, y: 20 }, "-=0.2");
-
-    return () => {
-      split.revert();
-      tl.kill();
-    };
+    return () => mm.revert();
   }, []);
 
   return (
-    <section className="relative text-white pt-28 pb-0 overflow-hidden min-h-[92vh] flex flex-col">
-
-      {/* ===== BACKGROUND IMAGE ===== */}
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-24 pb-0 text-white sm:pt-28 lg:min-h-[92vh]">
       <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         <div className="absolute -inset-[12%]">
           <img
             src="https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=1920&q=80"
-            alt="Find your home in the Kingdom"
-            className="w-full h-full object-cover object-center"
+            alt=""
+            className="h-full w-full object-cover object-center"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/75" />
       </div>
 
-      {/* ===== DOT GRID PATTERN ===== */}
       <div
-        className="absolute inset-0 z-[2] opacity-60 pointer-events-none"
+        className="pointer-events-none absolute inset-0 z-[2] opacity-60"
         style={{
-          backgroundImage: "radial-gradient(rgba(255,255,255,0.04) 1.5px, transparent 1.5px)",
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,0.04) 1.5px, transparent 1.5px)",
           backgroundSize: "40px 40px",
         }}
       />
 
-      {/* ===== MAIN CONTENT ===== */}
-      <div className="relative z-10 flex-1 flex flex-col justify-center text-center px-5 pb-14 max-w-5xl mx-auto w-full">
-
-        {/* --- Badge --- */}
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-4 pb-10 text-center sm:px-6 sm:pb-14">
         <div
           ref={badgeRef}
-          className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-7 mx-auto"
+          className="mx-auto mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 backdrop-blur-md sm:mb-7 sm:gap-3 sm:px-4"
         >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" />
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
           </span>
-          <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-white/90">
+          <span className="text-left text-[10px] font-bold tracking-[0.12em] text-white/90 uppercase sm:text-[11px] sm:tracking-[0.2em]">
             Saudi Arabia's trusted property marketplace
           </span>
         </div>
 
-        {/* --- Heading --- */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-black max-w-4xl mx-auto leading-[1.06] tracking-tight drop-shadow-lg">
-
-          {/* SplitText sirf is line pe */}
+        <h1 className="mx-auto max-w-4xl text-[2.05rem] leading-[1.08] font-black tracking-tight drop-shadow-lg sm:text-5xl md:text-6xl lg:text-[4rem]">
           <span ref={headingLine1Ref} className="block">
             Find your home in the
           </span>
-
-          {/* Kingdom — alag ref, gradient safe */}
           <span
             ref={kingdomRef}
-            className="block mt-1 pb-3"
+            className="mt-1 block pb-2"
             style={{
-              background: "linear-gradient(135deg, #f5c842 0%, #f97316 60%, #ef4444 100%)",
+              background:
+                "linear-gradient(135deg, #f5c842 0%, #f97316 60%, #ef4444 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -113,72 +113,90 @@ export default function HeroSection() {
           </span>
         </h1>
 
-        {/* --- Description --- */}
         <p
           ref={descRef}
-          className="text-white/80 text-lg md:text-xl mt-6 max-w-2xl mx-auto leading-relaxed drop-shadow-md"
+          className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/80 drop-shadow-md sm:mt-6 sm:text-lg md:text-xl"
         >
           Resale villas, off-plan communities, and investment opportunities —
           tailored for citizens, residents, and investors.
         </p>
 
-        {/* --- Buttons --- */}
         <div
           ref={buttonsRef}
-          className="flex flex-wrap items-center justify-center gap-4 mt-9"
+          className="mx-auto mt-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
         >
           <a
             href="/property"
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-all duration-200 hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-500 px-7 py-3.5 font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-orange-600"
           >
             View Details
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
               <path d="M5 12h14" />
               <path d="m12 5 7 7-7 7" />
             </svg>
           </a>
           <a
             href="/off-plan"
-            className="inline-flex items-center px-7 py-3.5 border border-white/35 bg-white/8 backdrop-blur-md text-white font-semibold rounded-lg transition-all duration-200 hover:bg-white/15 hover:border-white/55"
+            className="inline-flex items-center justify-center rounded-lg border border-white/35 bg-white/8 px-7 py-3.5 font-semibold text-white backdrop-blur-md transition-all duration-200 hover:border-white/55 hover:bg-white/15"
           >
             Register Interest
           </a>
         </div>
 
-        {/* --- Stats Grid --- */}
         <div
           ref={statsRef}
-          className="grid grid-cols-2 md:grid-cols-4 gap-0 mt-12 pt-7 border-t border-white/15 max-w-3xl mx-auto w-full"
+          className="mx-auto mt-10 grid w-full max-w-3xl grid-cols-2 gap-y-4 border-t border-white/15 pt-6 md:mt-12 md:grid-cols-4 md:gap-0 md:pt-7"
         >
-          <div className="text-center px-3 py-2">
-            <p className="text-2xl font-black text-white">500+</p>
-            <p className="text-xs text-white/55 mt-1 font-medium">Verified listings</p>
+          <div className="px-2 py-2 text-center">
+            <p className="text-xl font-black text-white sm:text-2xl">500+</p>
+            <p className="mt-1 text-xs font-medium text-white/55">Verified listings</p>
           </div>
-          <div className="text-center px-3 py-2">
-            <p className="text-2xl font-black text-white">6+</p>
-            <p className="text-xs text-white/55 mt-1 font-medium">Major cities</p>
+          <div className="px-2 py-2 text-center">
+            <p className="text-xl font-black text-white sm:text-2xl">6+</p>
+            <p className="mt-1 text-xs font-medium text-white/55">Major cities</p>
           </div>
-          <div className="text-center px-3 py-2">
-            <p className="text-2xl font-black text-white">FAL</p>
-            <p className="text-xs text-white/55 mt-1 font-medium">Licensed brokerage</p>
+          <div className="px-2 py-2 text-center">
+            <p className="text-xl font-black text-white sm:text-2xl">FAL</p>
+            <p className="mt-1 text-xs font-medium text-white/55">Licensed brokerage</p>
           </div>
-          <div className="text-center px-3 py-2">
-            <p className="text-2xl font-black text-white">24/7</p>
-            <p className="text-xs text-white/55 mt-1 font-medium">Expert guidance</p>
+          <div className="px-2 py-2 text-center">
+            <p className="text-xl font-black text-white sm:text-2xl">24/7</p>
+            <p className="mt-1 text-xs font-medium text-white/55">Expert guidance</p>
           </div>
         </div>
-
       </div>
 
-      <div className="relative z-10 flex flex-col items-center gap-1.5 pb-4">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/45 animate-bounce">
+      <div className="relative z-10 hidden flex-col items-center gap-1.5 pb-4 sm:flex">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="animate-bounce text-white/45"
+          aria-hidden="true"
+        >
           <path d="m6 9 6 6 6-6" />
         </svg>
-        <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+        <div className="h-8 w-px bg-gradient-to-b from-white/30 to-transparent" />
       </div>
 
       <TrustBar />
-
     </section>
   );
 }

@@ -1,96 +1,111 @@
-import Hero from "../components/Hero";
+import { Link } from "react-router-dom";
 import ClientCard from "../components/ClientCard";
 import MortageCard from "../components/MortageCard";
 import SecondCard from "../components/SecondCard";
-import FeatureCard from "../components/FeatureCard";
 import HeroSection from "../components/HeroSection";
 import FeaturedCarousel from "../components/FeaturedCarousel";
-import InsightStatCard from "../components/InsightStatCard";
 import InsightCarousel from "../components/InsightCarousel";
+
+const featuredCards = [{}, {}, {}, {}];
+
+function SectionLabel({ children }) {
+  return (
+    <div className="inline-flex items-center gap-2 self-start rounded-full border border-gray-300 px-3 py-1">
+      <span className="h-1.5 w-1.5 rounded-full bg-[#c4674a]" />
+      <span className="text-xs font-semibold uppercase text-[#3ab5a5] sm:text-sm">
+        {children}
+      </span>
+    </div>
+  );
+}
+
+function SectionTitle({ children }) {
+  return (
+    <h2 className="mt-6 text-3xl font-extrabold leading-tight sm:mt-8 sm:text-4xl">
+      {children}
+    </h2>
+  );
+}
 
 export default function Home() {
   return (
     <>
       <HeroSection />
 
-      <div className=" flex flex-col justify-center px-38 py-20 bg-[#faf8f5]">
-        <div className="self-start inline-flex rounded-full border border-gray-300 px-3 py-1 items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c4674a]"></span>
-          <span className="uppercase text-[#3ab5a5] font-semibold">
-            Off-plan
-          </span>
-        </div>
-        <h1 className="mt-8 text-4xl font-extrabold">Featured projects</h1>
-        <div className="mt-4 h-1 w-12 rounded-[2px] border bg-black"></div>
-        <p className="mt-4 text-[#6e6558] text-lg">
+      <section className="overflow-x-clip bg-[#faf8f5] px-4 py-14 sm:px-6 md:px-10 md:py-20 lg:px-16 xl:px-20">
+        <SectionLabel>Off-plan</SectionLabel>
+        <SectionTitle>Featured projects</SectionTitle>
+        <div className="mt-4 h-1 w-12 rounded-sm bg-black" />
+        <p className="mt-4 text-base text-[#6e6558] sm:text-lg">
           Hand-picked off-plan opportunities for this journey
         </p>
-
-        <div className="mt-14">
-          <FeaturedCarousel cards={[{}, {}, {}, {}]} />
+        <div className="mt-10 md:mt-14">
+          <FeaturedCarousel cards={featuredCards} />
         </div>
-      </div>
+      </section>
 
-      <div className=" flex flex-col justify-center px-38 py-20 bg-[#faf8f5]">
-        <div className="self-start inline-flex rounded-full border border-gray-300 px-3 py-1 items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c4674a]"></span>
-          <span className="uppercase text-[#3ab5a5] font-semibold">
-            buyer tools
-          </span>
-        </div>
-        <h1 className="mt-8 text-4xl font-extrabold">
-          Plan your purchase with confidence
-        </h1>
-        <div className="mt-4 h-1 w-12 rounded-[2px] border bg-black"></div>
-        <p className="mt-4 text-[#6e6558] text-lg">
+      <section className="bg-[#faf8f5] px-4 py-14 sm:px-6 md:px-10 md:py-20 lg:px-16 xl:px-20">
+        <SectionLabel>buyer tools</SectionLabel>
+        <SectionTitle>Plan your purchase with confidence</SectionTitle>
+        <div className="mt-4 h-1 w-12 rounded-sm bg-black" />
+        <p className="mt-4 max-w-3xl text-base text-[#6e6558] sm:text-lg">
           Estimate finance, book tours, and browse FAL-verified listings —
           everything you need before you buy.
         </p>
 
-        <div className="mt-14 flex gap-10">
-          <MortageCard />
-          <div className="flex flex-col gap-4">
+        <div className="mt-10 flex flex-col gap-6 xl:mt-14 xl:flex-row xl:items-start">
+          <div className="w-full min-w-0 xl:flex-1">
+            <MortageCard />
+          </div>
+          <div className="flex w-full flex-col gap-4 xl:w-80 xl:shrink-0">
             <SecondCard />
-            <SecondCard />
-            <SecondCard />
+            <SecondCard
+              icon="calendar"
+              title="Book a viewing"
+              text="Schedule a tour with a licensed advisor before you decide."
+            />
+            <SecondCard
+              icon="support"
+              title="Talk to an advisor"
+              text="Get guidance on finance, handover, and the right community."
+            />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="flex flex-col px-30 py-20 bg-[#f2ede5] gap-6">
-        <div className="self-start inline-flex rounded-full border border-gray-300 px-3 py-1 items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c4674a]"></span>
-          <span className="uppercase text-[#3ab5a5] font-semibold">
-            Market data
-          </span>
-        </div>
-        <h1 className="text-4xl font-extrabold">Saudi market insights</h1>
-        <div className="h-1 w-12 rounded-[2px] border bg-black"></div>
-        <p className="text-[#6e6558] text-lg">
+      <section className="overflow-x-clip bg-[#f2ede5] px-4 py-14 sm:px-6 md:px-10 md:py-20 lg:px-16 xl:px-20">
+        <SectionLabel>Market data</SectionLabel>
+        <SectionTitle>Saudi market insights</SectionTitle>
+        <div className="mt-4 h-1 w-12 rounded-sm bg-black" />
+        <p className="mt-4 max-w-3xl text-base text-[#6e6558] sm:text-lg">
           Key indicators across major cities — updated from live Velantis
           listings
         </p>
         <div className="mt-8">
           <InsightCarousel />
         </div>
-      </div>
+      </section>
 
-      <div className="h-[750px] flex flex-col justify-center items-center bg-[#f2ede5] gap-6">
-        <h1 className="text-4xl font-extrabold">What our clients say</h1>
-        <div className="h-1 w-12 rounded-[2px] border bg-black"></div>
-        <p className="text-[#6e6558] text-lg">
+      <section className="flex flex-col items-center bg-[#f2ede5] px-4 py-14 sm:px-6 md:px-10 md:py-20">
+        <h2 className="text-center text-3xl font-extrabold sm:text-4xl">
+          What our clients say
+        </h2>
+        <div className="mt-4 h-1 w-12 rounded-sm bg-black" />
+        <p className="mt-4 text-center text-base text-[#6e6558] sm:text-lg">
           Real experiences from satisfied customers across Saudi Arabia
         </p>
-        <div className="flex gap-7 mt-8">
-          <ClientCard />
-          <ClientCard />
-          <ClientCard />
+        <div className="mt-8 grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 3 }, (_, index) => (
+            <ClientCard key={index} />
+          ))}
         </div>
-
-        <button className="rounded-xl bg-white font-semibold px-7 py-4 mt-5">
+        <Link
+          to="/property"
+          className="mt-8 rounded-xl bg-white px-7 py-4 text-center font-semibold"
+        >
           View all properties
-        </button>
-      </div>
+        </Link>
+      </section>
     </>
   );
 }

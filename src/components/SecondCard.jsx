@@ -1,23 +1,29 @@
-import { LuAward } from "react-icons/lu";
-import { LuCalendarCheck } from "react-icons/lu";
-import { LuHeadphones } from "react-icons/lu"; 
+import { LuAward, LuCalendarCheck, LuHeadphones } from "react-icons/lu";
 
+const icons = {
+  award: LuAward,
+  calendar: LuCalendarCheck,
+  support: LuHeadphones,
+};
 
-export default function SecondCard() {
+export default function SecondCard({
+  icon = "award",
+  title = "FAL-verified listings",
+  text = "Every property is checked against Saudi REGA licensing standards.",
+}) {
+  const Icon = icons[icon] ?? LuAward;
+
   return (
-    <div className="h-30 px-5 py-6 bg-white rounded-xl shadow">
-      <div className="flex gap-4">
-        <div className="self-start px-4 py-4 flex jistify-center items-center border border-[#c4674a] rounded-xl">
-          <LuAward className="text-[#c4674a]" />
+    <div className="rounded-xl bg-white px-4 py-4 shadow sm:px-5 sm:py-5">
+      <div className="flex items-start gap-4">
+        <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#c4674a]">
+          <Icon className="text-[#c4674a]" />
         </div>
-        <div>
-          <h3>FAL-verified listings</h3>
-          <p className="mt-2">
-            Every property is checked against Saudi REGA licensing standards.
-          </p>
+        <div className="min-w-0">
+          <h3 className="font-semibold text-slate-800">{title}</h3>
+          <p className="mt-1 text-sm leading-relaxed text-[#6e6558]">{text}</p>
         </div>
       </div>
     </div>
   );
 }
-

@@ -94,18 +94,17 @@ const trustItems = [
 
 function TrustBar() {
   return (
-    <div className="w-full bg-black backdrop-blur-xl border-t border-white/12">
-      <div className="max-w-5xl mx-auto px-5 py-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="w-full border-t border-white/12 bg-black backdrop-blur-xl">
+      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 px-4 py-4 sm:grid-cols-2 sm:px-5 sm:py-5 lg:grid-cols-4">
         {trustItems.map((item) => (
           <div key={item.id} className="flex items-start gap-3">
-            {/* Icon Box */}
-            <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0 text-white/80">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white/80">
               {item.icon}
             </div>
 
-            <div>
+            <div className="min-w-0">
               <p className="text-sm font-bold text-white">{item.title}</p>
-              <p className="text-xs text-white/55 mt-0.5 leading-relaxed">
+              <p className="mt-0.5 text-xs leading-relaxed text-white/55">
                 {item.desc}
               </p>
             </div>
