@@ -5,8 +5,17 @@ import SecondCard from "../components/SecondCard";
 import HeroSection from "../components/HeroSection";
 import FeaturedCarousel from "../components/FeaturedCarousel";
 import InsightCarousel from "../components/InsightCarousel";
+import { projects } from "../data/projects";
 
-const featuredCards = [{}, {}, {}, {}];
+const featuredCards = projects.map((project) => ({
+  slug: project.slug,
+  image: project.image,
+  developer: project.developer,
+  title: project.title,
+  location: project.cardLocation,
+  units: project.cardUnits,
+  handover: project.cardHandover,
+}));
 
 function SectionLabel({ children }) {
   return (

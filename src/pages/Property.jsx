@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PropertyHero from "../components/PropertyHero";
@@ -12,36 +12,34 @@ export default function Property() {
   const heroRef = useRef(null);
   const coverRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const hero = heroRef.current;
     const cover = coverRef.current;
     if (!hero || !cover) return undefined;
 
-    const mm = gsap.matchMedia();
+    const trigger = ScrollTrigger.create({
+      trigger: hero,
+      start: "top top",
+      endTrigger: cover,
+      end: "top top",
+      pin: true,
+      pinSpacing: false,
+    });
 
-    mm.add(
-      "(min-width: 1024px) and (min-height: 800px) and (prefers-reduced-motion: no-preference)",
-      () => {
-        const trigger = ScrollTrigger.create({
-          trigger: hero,
-          start: "top top",
-          endTrigger: cover,
-          end: "top top",
-          pin: true,
-          pinSpacing: false,
-          anticipatePin: 1,
-        });
-
-        return () => trigger.kill();
-      },
-    );
-
-    return () => mm.revert();
+    return () => {
+      const node = heroRef.current;
+      trigger.kill(true);
+      const spacer = node?.parentElement;
+      if (spacer?.classList.contains("pin-spacer") && spacer.parentElement) {
+        spacer.parentElement.insertBefore(node, spacer);
+        spacer.remove();
+      }
+    };
   }, []);
 
   return (
     <>
-      <div ref={heroRef}>
+      <div ref={heroRef} className="relative z-0">
         <PropertyHero />
       </div>
 

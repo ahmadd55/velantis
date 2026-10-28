@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { LuMapPin } from "react-icons/lu";
 import { LuLayers } from "react-icons/lu";
 import { LuCalendar } from "react-icons/lu";
@@ -8,6 +9,7 @@ const defaultImage =
   "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80";
 
 export default function FeatureCard({
+  slug = "sedra",
   image = defaultImage,
   developer = "Roshn",
   title = "Sedra — North Riyadh",
@@ -15,8 +17,14 @@ export default function FeatureCard({
   units = "186/420 units",
   handover = "Dec 2026",
 }) {
+  const navigate = useNavigate();
+  const whatsapp = `https://wa.me/966533221625?text=${encodeURIComponent(`Hi, I'm interested in ${title}`)}`;
+
   return (
-    <div className="overflow-hidden rounded-xl bg-white shadow">
+    <div
+      className="cursor-pointer overflow-hidden rounded-xl bg-white shadow"
+      onClick={() => navigate(`/off-plan/${slug}`)}
+    >
       <img src={image} alt={title} className="h-44 w-full object-cover sm:h-48" />
       <div className="flex flex-col gap-3 px-4 py-4 sm:px-5 sm:py-5">
         <span className="block text-sm text-[#c4674a]">{developer}</span>
@@ -44,13 +52,16 @@ export default function FeatureCard({
             View Details
             <LuArrowRight />
           </button>
-          <button
-            type="button"
+          <a
+            href={whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="WhatsApp"
+            onClick={(event) => event.stopPropagation()}
             className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-green-600"
           >
             <LuMessageCircle className="text-white" />
-          </button>
+          </a>
         </div>
       </div>
     </div>

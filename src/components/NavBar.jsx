@@ -65,19 +65,26 @@ export default function NavBar() {
   }, [open]);
 
   return (
-    <nav className="fixed top-0 left-0 z-50 w-full bg-black text-white">
+    <nav className="fixed top-0 left-0 z-50 w-full border-t-2 border-[#c4674a] bg-black text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:px-6">
         <Logo onClick={() => setOpen(false)} />
 
         <ul className="hidden items-center gap-6 text-sm font-medium xl:flex">
           {links.map((link) => {
-            const active = pathname === link.to;
+            const active =
+              link.to === "/"
+                ? pathname === "/"
+                : pathname === link.to || pathname.startsWith(`${link.to}/`);
             return (
               <li key={link.to}>
                 <Link
                   to={link.to}
                   aria-current={active ? "page" : undefined}
-                  className={active ? "text-[#d4a574]" : "hover:text-white/80"}
+                  className={
+                    active
+                      ? "rounded-full bg-[#1a3c34] px-3 py-1.5 text-white"
+                      : "rounded-full px-3 py-1.5 hover:text-white/80"
+                  }
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
@@ -104,12 +111,12 @@ export default function NavBar() {
             <span>+966 533 221 625</span>
           </a>
 
-          <button
-            type="button"
-            className="hidden cursor-pointer rounded-lg bg-[#c4674a] px-3 py-2 text-sm font-semibold sm:inline-flex"
+          <Link
+            to="/contact-us"
+            className="hidden rounded-lg bg-[#c4674a] px-3 py-2 text-sm font-semibold sm:inline-flex"
           >
             Send Message
-          </button>
+          </Link>
 
           <button
             type="button"
@@ -131,14 +138,17 @@ export default function NavBar() {
         >
           <ul className="px-4">
             {links.map((link) => {
-              const active = pathname === link.to;
+              const active =
+                link.to === "/"
+                  ? pathname === "/"
+                  : pathname === link.to || pathname.startsWith(`${link.to}/`);
               return (
                 <li key={link.to} className="border-b border-white/10">
                   <Link
                     to={link.to}
                     aria-current={active ? "page" : undefined}
                     onClick={() => setOpen(false)}
-                    className={`block py-3.5 text-base ${active ? "text-[#d4a574]" : ""}`}
+                    className={`block rounded-lg px-3 py-3.5 text-base ${active ? "bg-[#1a3c34] text-white" : ""}`}
                   >
                     {link.label}
                   </Link>
@@ -159,12 +169,13 @@ export default function NavBar() {
               <LuPhone />
               <span>+966 533 221 625</span>
             </a>
-            <button
-              type="button"
-              className="rounded-lg bg-[#c4674a] px-4 py-3 text-sm font-semibold"
+            <Link
+              to="/contact-us"
+              onClick={() => setOpen(false)}
+              className="rounded-lg bg-[#c4674a] px-4 py-3 text-center text-sm font-semibold"
             >
               Send Message
-            </button>
+            </Link>
           </div>
         </div>
       )}

@@ -15,7 +15,6 @@ export default function FeaturedCarousel({ cards = [{}, {}, {}] }) {
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 767px)");
     const tablet = window.matchMedia("(min-width: 768px) and (max-width: 1023px)");
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const layout = () => {
       cardRefs.current.forEach((el, index) => {
@@ -25,10 +24,9 @@ export default function FeaturedCarousel({ cards = [{}, {}, {}] }) {
         if (diff > total / 2) diff -= total;
         if (diff < -total / 2) diff += total;
 
-        const hideSides = reduce.matches || mobile.matches;
-        const config = hideSides
+        const config = mobile.matches
           ? {
-              x: mobile.matches && !reduce.matches ? diff * 24 : 0,
+              x: diff * 24,
               rotateY: 0,
               z: 0,
               scale: 1,
@@ -70,13 +68,12 @@ export default function FeaturedCarousel({ cards = [{}, {}, {}] }) {
 
     mobile.addEventListener("change", layout);
     tablet.addEventListener("change", layout);
-    reduce.addEventListener("change", layout);
 
     return () => {
       mobile.removeEventListener("change", layout);
       tablet.removeEventListener("change", layout);
-      reduce.removeEventListener("change", layout);
       gsap.killTweensOf(nodes);
+      gsap.set(nodes, { clearProps: "transform,opacity,zIndex" });
     };
   }, [active, total]);
 

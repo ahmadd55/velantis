@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&family=Playfair+Display:wght@500;600;700&display=swap');
 @import "tailwindcss";
 
 
@@ -6,10 +6,7 @@ body {
     font-family: "Nunito", sans-serif;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .animate-bounce,
-    .animate-ping {
-        animation: none;
-    }
+.font-display {
+    font-family: "Playfair Display", Georgia, serif;
 }
 

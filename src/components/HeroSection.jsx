@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import TrustBar from "./TrustBar";
@@ -13,7 +13,7 @@ export default function HeroSection() {
   const buttonsRef = useRef(null);
   const statsRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const mm = gsap.matchMedia();
     const sequence = [
       badgeRef.current,
@@ -24,17 +24,13 @@ export default function HeroSection() {
       statsRef.current,
     ];
 
-    mm.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set(sequence, { opacity: 1, y: 0 });
-    });
-
-    mm.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
+    mm.add("(max-width: 1023px)", () => {
       const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.45 } });
       tl.from(sequence, { opacity: 0, y: 16, stagger: 0.06 });
       return () => tl.kill();
     });
 
-    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+    mm.add("(min-width: 1024px)", () => {
       const split = new SplitText(headingLine1Ref.current, { type: "chars" });
       const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.6 } });
 
@@ -51,7 +47,7 @@ export default function HeroSection() {
 
       return () => {
         tl.kill();
-        split.revert();
+        if (split.isSplit) split.revert();
       };
     });
 
@@ -95,9 +91,11 @@ export default function HeroSection() {
         </div>
 
         <h1 className="mx-auto max-w-4xl text-[2.05rem] leading-[1.08] font-black tracking-tight drop-shadow-lg sm:text-5xl md:text-6xl lg:text-[4rem]">
-          <span ref={headingLine1Ref} className="block">
-            Find your home in the
-          </span>
+          <span
+            ref={headingLine1Ref}
+            className="block"
+            dangerouslySetInnerHTML={{ __html: "Find your home in the" }}
+          />
           <span
             ref={kingdomRef}
             className="mt-1 block pb-2"
