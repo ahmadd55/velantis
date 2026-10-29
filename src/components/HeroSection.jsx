@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import TrustBar from "./TrustBar";
@@ -134,8 +135,8 @@ export default function HeroSection() {
           ref={buttonsRef}
           className="mx-auto mt-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
         >
-          <a
-            href="/property"
+          <Link
+            to="/property"
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-500 px-7 py-3.5 font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-orange-600"
           >
             {t("View Details")}
@@ -154,13 +155,13 @@ export default function HeroSection() {
               <path d="M5 12h14" />
               <path d="m12 5 7 7-7 7" />
             </svg>
-          </a>
-          <a
-            href="/off-plan"
+          </Link>
+          <Link
+            to="/off-plan"
             className="inline-flex items-center justify-center rounded-lg border border-white/35 bg-white/8 px-7 py-3.5 font-semibold text-white backdrop-blur-md transition-all duration-200 hover:border-white/55 hover:bg-white/15"
           >
             {t("Register Interest")}
-          </a>
+          </Link>
         </div>
 
         <div
