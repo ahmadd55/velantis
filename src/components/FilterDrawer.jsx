@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { LuFilter, LuX } from "react-icons/lu";
+import { useI18n } from "../i18n.jsx";
 
 const types = ["Residential", "Commercial", "Industrial", "Land", "Beach", "Others"];
 const conditions = ["New", "Old", "Other"];
@@ -10,6 +11,7 @@ function toggle(list, value) {
 }
 
 export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, onClear }) {
+  const { t } = useI18n();
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (event) => {
@@ -34,7 +36,7 @@ export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, 
     >
       <button
         type="button"
-        aria-label="Close filters"
+        aria-label={t("Close filters")}
         className={`absolute inset-0 bg-black/40 transition-opacity ${open ? "opacity-100" : "opacity-0"}`}
         onClick={onClose}
       />
@@ -47,11 +49,11 @@ export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, 
         <div className="flex items-center justify-between bg-black px-4 py-4 text-white">
           <div className="flex items-center gap-2">
             <LuFilter />
-            <h2 className="text-xl font-semibold">Property filters</h2>
+            <h2 className="text-xl font-semibold">{t("Property filters")}</h2>
           </div>
           <button
             type="button"
-            aria-label="Close"
+            aria-label={t("Close")}
             onClick={onClose}
             className="rounded-full p-2 hover:bg-white/20"
           >
@@ -61,7 +63,7 @@ export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, 
 
         <div className="min-h-0 flex-1 overflow-y-auto pb-4">
           <div className="border-b border-black/10 p-4">
-            <h3 className="mb-3 text-lg font-semibold">Property type</h3>
+            <h3 className="mb-3 text-lg font-semibold">{t("Property type")}</h3>
             <div className="flex flex-wrap gap-2">
               {types.map((type) => {
                 const active = draft.types.includes(type);
@@ -74,7 +76,7 @@ export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, 
                       active ? "bg-black text-white" : "bg-[#f3efe9] text-slate-700 hover:bg-black/10"
                     }`}
                   >
-                    {type}
+                    {t(type)}
                   </button>
                 );
               })}
@@ -82,40 +84,40 @@ export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, 
           </div>
 
           <div className="space-y-4 p-4">
-            <Field label="When selling">
+            <Field label={t("When selling")}>
               <select
                 value={draft.selling}
                 onChange={(event) => set("selling", event.target.value)}
                 className="h-12 w-full rounded-md border border-black/10 bg-white px-3"
               >
-                <option value="">Select timeline</option>
-                <option>Immediately</option>
-                <option>In a month</option>
-                <option>In 3 months</option>
-                <option>In a year</option>
+                <option value="">{t("Select timeline")}</option>
+                <option value="Immediately">{t("Immediately")}</option>
+                <option value="In a month">{t("In a month")}</option>
+                <option value="In 3 months">{t("In 3 months")}</option>
+                <option value="In a year">{t("In a year")}</option>
               </select>
             </Field>
 
             <CheckGroup
-              label="Property condition"
+              label={t("Property condition")}
               options={conditions}
               selected={draft.conditions}
               onToggle={(value) => set("conditions", toggle(draft.conditions, value))}
             />
             <CheckGroup
-              label="Property facing"
+              label={t("Property facing")}
               options={facings}
               selected={draft.facings}
               onToggle={(value) => set("facings", toggle(draft.facings, value))}
             />
 
-            <Field label="Build year">
+            <Field label={t("Build year")}>
               <div className="grid grid-cols-2 gap-2">
                 <input
                   type="number"
                   min="2000"
                   max="2026"
-                  placeholder="From"
+                  placeholder={t("From")}
                   value={draft.yearFrom}
                   onChange={(event) => set("yearFrom", event.target.value)}
                   className="rounded-md border border-black/10 px-3 py-2"
@@ -124,7 +126,7 @@ export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, 
                   type="number"
                   min="2000"
                   max="2026"
-                  placeholder="To"
+                  placeholder={t("To")}
                   value={draft.yearTo}
                   onChange={(event) => set("yearTo", event.target.value)}
                   className="rounded-md border border-black/10 px-3 py-2"
@@ -132,30 +134,30 @@ export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, 
               </div>
             </Field>
 
-            <RangeField label="Price range (SAR)" min={draft.priceMin} max={draft.priceMax} onMin={(value) => set("priceMin", value)} onMax={(value) => set("priceMax", value)} />
-            <RangeField label="Land area (sqm)" min={draft.landMin} max={draft.landMax} onMin={(value) => set("landMin", value)} onMax={(value) => set("landMax", value)} />
-            <RangeField label="Covered area (sqm)" min={draft.coveredMin} max={draft.coveredMax} onMin={(value) => set("coveredMin", value)} onMax={(value) => set("coveredMax", value)} />
+            <RangeField label={t("Price range (SAR)")} min={draft.priceMin} max={draft.priceMax} onMin={(value) => set("priceMin", value)} onMax={(value) => set("priceMax", value)} />
+            <RangeField label={t("Land area (sqm)")} min={draft.landMin} max={draft.landMax} onMin={(value) => set("landMin", value)} onMax={(value) => set("landMax", value)} />
+            <RangeField label={t("Covered area (sqm)")} min={draft.coveredMin} max={draft.coveredMax} onMin={(value) => set("coveredMin", value)} onMax={(value) => set("coveredMax", value)} />
 
-            <Field label="Location">
+            <Field label={t("Location")}>
               <div className="space-y-2">
-                <input placeholder="City" value={draft.city} onChange={(event) => set("city", event.target.value)} className="w-full rounded-md border border-black/10 px-3 py-2" />
-                <input placeholder="State" value={draft.state} onChange={(event) => set("state", event.target.value)} className="w-full rounded-md border border-black/10 px-3 py-2" />
-                <input placeholder="Country" value={draft.country} onChange={(event) => set("country", event.target.value)} className="w-full rounded-md border border-black/10 px-3 py-2" />
+                <input placeholder={t("City")} value={draft.city} onChange={(event) => set("city", event.target.value)} className="w-full rounded-md border border-black/10 px-3 py-2" />
+                <input placeholder={t("State")} value={draft.state} onChange={(event) => set("state", event.target.value)} className="w-full rounded-md border border-black/10 px-3 py-2" />
+                <input placeholder={t("Country")} value={draft.country} onChange={(event) => set("country", event.target.value)} className="w-full rounded-md border border-black/10 px-3 py-2" />
               </div>
             </Field>
 
-            <Field label="Buyer journey">
+            <Field label={t("Buyer journey")}>
               <select
                 value={draft.journey}
                 onChange={(event) => set("journey", event.target.value)}
                 className="h-12 w-full rounded-md border border-black/10 bg-white px-3"
               >
-                <option value="">Select journey</option>
-                <option value="citizens">Saudi citizens</option>
-                <option value="expats">Expats</option>
-                <option value="prsaudia">Premium residency</option>
-                <option value="invest">Investors</option>
-                <option value="haramain">Haramain</option>
+                <option value="">{t("Select journey")}</option>
+                <option value="citizens">{t("Saudi citizens")}</option>
+                <option value="expats">{t("Expats")}</option>
+                <option value="prsaudia">{t("Premium residency")}</option>
+                <option value="invest">{t("Investors")}</option>
+                <option value="haramain">{t("Haramain")}</option>
               </select>
             </Field>
           </div>
@@ -164,10 +166,10 @@ export default function FilterDrawer({ open, draft, setDraft, onClose, onApply, 
         <div className="border-t border-black/10 bg-white p-3">
           <div className="flex gap-2">
             <button type="button" onClick={onClear} className="flex-1 rounded-md bg-slate-500 px-3 py-2.5 text-sm font-medium text-white hover:bg-slate-600">
-              Clear all
+              {t("Clear all")}
             </button>
             <button type="button" onClick={onApply} className="flex-1 rounded-md bg-black px-3 py-2.5 text-sm font-medium text-white hover:opacity-90">
-              Apply filters
+              {t("Apply filters")}
             </button>
           </div>
         </div>
@@ -186,17 +188,19 @@ function Field({ label, children }) {
 }
 
 function RangeField({ label, min, max, onMin, onMax }) {
+  const { t } = useI18n();
   return (
     <Field label={label}>
       <div className="grid grid-cols-2 gap-2">
-        <input type="number" placeholder="Min" value={min} onChange={(event) => onMin(event.target.value)} className="rounded-md border border-black/10 px-3 py-2" />
-        <input type="number" placeholder="Max" value={max} onChange={(event) => onMax(event.target.value)} className="rounded-md border border-black/10 px-3 py-2" />
+        <input type="number" placeholder={t("Min")} value={min} onChange={(event) => onMin(event.target.value)} className="rounded-md border border-black/10 px-3 py-2" />
+        <input type="number" placeholder={t("Max")} value={max} onChange={(event) => onMax(event.target.value)} className="rounded-md border border-black/10 px-3 py-2" />
       </div>
     </Field>
   );
 }
 
 function CheckGroup({ label, options, selected, onToggle }) {
+  const { t } = useI18n();
   return (
     <Field label={label}>
       <div className="grid grid-cols-2 gap-2">
@@ -208,7 +212,7 @@ function CheckGroup({ label, options, selected, onToggle }) {
               onChange={() => onToggle(option)}
               className="rounded border-slate-300"
             />
-            {option}
+            {t(option)}
           </label>
         ))}
       </div>

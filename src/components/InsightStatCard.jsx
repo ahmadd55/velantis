@@ -1,5 +1,6 @@
 
 import { LuTrendingUp, LuTrendingDown } from "react-icons/lu";
+import { useI18n } from "../i18n.jsx";
 
 export default function InsightStatCard({
   city = "Riyadh",
@@ -7,6 +8,7 @@ export default function InsightStatCard({
   value = "4,850 SAR",
   trend = "up", 
 }) {
+  const { t } = useI18n();
   const isUp = trend === "up";
 
   return (
@@ -16,7 +18,7 @@ export default function InsightStatCard({
       <div className="flex items-center justify-between">
 
         <span className="text-[11px] font-bold uppercase tracking-widest text-[#3ab5a5] bg-[#3ab5a5]/10 border border-[#3ab5a5]/20 px-2.5 py-1 rounded-full">
-          {city}
+          {t(city)}
         </span>
 
         <span
@@ -27,11 +29,11 @@ export default function InsightStatCard({
           }`}
         >
           {isUp ? <LuTrendingUp className="h-3 w-3" /> : <LuTrendingDown className="h-3 w-3" />}
-          {isUp ? "Up" : "Down"}
+          {t(isUp ? "Up" : "Down")}
         </span>
       </div>
 
-      <p className="text-sm mt-3 text-slate-500 leading-snug">{label}</p>
+      <p className="text-sm mt-3 text-slate-500 leading-snug">{t(label)}</p>
 
       <p className="mt-5 text-2xl font-bold tracking-tight break-words text-slate-800 sm:text-3xl">{value}</p>
 

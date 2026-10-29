@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useI18n } from "../i18n.jsx";
 
 export default function PriceAlert() {
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
 
@@ -13,9 +15,9 @@ export default function PriceAlert() {
       }}
     >
       <div>
-        <h3 className="font-semibold text-slate-900">Price alerts</h3>
+        <h3 className="font-semibold text-slate-900">{t("Price alerts")}</h3>
         <p className="mt-1 text-sm text-slate-500">
-          Get notified when matching listings are published
+          {t("Get notified when matching listings are published")}
         </p>
       </div>
       {done ? (
@@ -27,13 +29,13 @@ export default function PriceAlert() {
           <input
             required
             type="email"
-            placeholder="Your email"
+            placeholder={t("Your email")}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             className="w-full rounded-xl border border-black/10 bg-[#faf8f5] px-3 py-2.5 text-sm"
           />
           <button type="submit" className="w-full rounded-xl bg-[#c4674a] py-2.5 text-sm font-semibold text-white">
-            Create alert
+            {t("Create alert")}
           </button>
         </>
       )}

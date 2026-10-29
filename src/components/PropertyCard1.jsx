@@ -1,10 +1,4 @@
-import {
-  LuMapPin,
-  LuLayers,
-  LuCalendar,
-  LuMessageCircle,
-  LuArrowRight,
-} from "react-icons/lu";
+import { LuMapPin, LuLayers, LuCalendar, LuArrowRight, LuMessageCircle } from "react-icons/lu";
 import property from "../mock/data";
 
 export default function PropertyCard1() {
@@ -60,9 +54,9 @@ export default function PropertyCard1() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
-            className="flex items-center justify-center rounded-lg border border-gray-300 px-3 py-2.5 text-gray-700"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-green-600 px-3 py-2.5 text-sm font-bold text-white transition-colors hover:bg-green-700"
           >
-            <LuMessageCircle size={16} />
+            <LuMessageCircle className="h-4 w-4" />
           </a>
         </div>
       </div>

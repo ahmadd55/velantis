@@ -1,6 +1,8 @@
 import { LuArrowUpRight, LuBedDouble, LuMapPin, LuMaximize2 } from "react-icons/lu";
+import { useI18n } from "../i18n.jsx";
 
 export default function ListingsMap({ listings, selectedId, onSelect, onViewListing }) {
+  const { t } = useI18n();
   const selected = listings.find((listing) => listing.id === selectedId) || listings[0];
   if (!selected) return null;
 
@@ -18,27 +20,27 @@ export default function ListingsMap({ listings, selectedId, onSelect, onViewList
         />
         <div className="border-t border-black/5 bg-[#f7f4ef] p-4 md:p-5">
           <p className="mb-1 text-xs font-bold tracking-[0.18em] text-[#c4674a] uppercase">
-            Selected property
+            {t("Selected property")}
           </p>
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="truncate font-semibold text-slate-900">{selected.title}</p>
-              <p className="mt-0.5 truncate text-sm text-slate-500">{selected.location}</p>
-              <p className="mt-2 text-base font-bold text-[#c4674a]">{selected.priceLabel}</p>
+              <p className="truncate font-semibold text-slate-900">{t(selected.title)}</p>
+              <p className="mt-0.5 truncate text-sm text-slate-500">{t(selected.location)}</p>
+              <p className="mt-2 text-base font-bold text-[#c4674a]">{t(selected.priceLabel)}</p>
             </div>
             <button
               type="button"
               onClick={() => onViewListing(selected.id)}
               className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[#c4674a] px-3 py-2 text-sm font-semibold text-[#c4674a]"
             >
-              View listing <LuArrowUpRight className="h-4 w-4" />
+              {t("View listing")} <LuArrowUpRight className="h-4 w-4" />
             </button>
           </div>
         </div>
       </div>
 
       <div className="min-w-0">
-        <p className="mb-3 text-sm font-medium text-slate-900">{listings.length} on map</p>
+        <p className="mb-3 text-sm font-medium text-slate-900">{listings.length} {t("on map")}</p>
         <ul className="max-h-[min(640px,70vh)] space-y-3 overflow-y-auto pe-1">
           {listings.map((listing) => {
             const active = listing.id === selected.id;
@@ -58,11 +60,11 @@ export default function ListingsMap({ listings, selectedId, onSelect, onViewList
                   />
                   <span className="min-w-0 flex-1 overflow-hidden">
                     <span className="line-clamp-2 text-sm leading-snug font-semibold text-slate-900">
-                      {listing.title}
+                      {t(listing.title)}
                     </span>
-                    <span className="mt-1 block truncate text-xs text-slate-500">{listing.city}</span>
+                    <span className="mt-1 block truncate text-xs text-slate-500">{t(listing.city)}</span>
                     <span className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-                      <span className="text-sm font-bold text-[#c4674a]">{listing.priceLabel}</span>
+                      <span className="text-sm font-bold text-[#c4674a]">{t(listing.priceLabel)}</span>
                       <span className="inline-flex items-center gap-1 text-xs text-slate-500">
                         <LuBedDouble className="h-3.5 w-3.5 text-[#c4674a]" />
                         {listing.beds}

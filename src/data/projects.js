@@ -89,7 +89,7 @@ export const projects = [
     gallery: [
       photo("photo-1600596542815-ffad4c1539a9"),
       photo("photo-1600585154526-990dced4db0d"),
-      photo("photo-1600047509807-ba8f99d2cdbc"),
+      photo("photo-1605276374104-dee2a0ed3cd6"),
     ],
     about:
       "Detached villas in Al Narjis with private gardens. Handover March 2028. A Retal project for families buying ahead of completion on a construction-linked plan.",

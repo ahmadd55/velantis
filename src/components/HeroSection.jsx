@@ -2,10 +2,12 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import TrustBar from "./TrustBar";
+import { useI18n } from "../i18n.jsx";
 
 gsap.registerPlugin(SplitText);
 
 export default function HeroSection() {
+  const { t, lang } = useI18n();
   const headingLine1Ref = useRef(null);
   const kingdomRef = useRef(null);
   const badgeRef = useRef(null);
@@ -14,6 +16,9 @@ export default function HeroSection() {
   const statsRef = useRef(null);
 
   useLayoutEffect(() => {
+    if (headingLine1Ref.current) {
+      headingLine1Ref.current.innerHTML = t("Find your home in the");
+    }
     const mm = gsap.matchMedia();
     const sequence = [
       badgeRef.current,
@@ -31,6 +36,11 @@ export default function HeroSection() {
     });
 
     mm.add("(min-width: 1024px)", () => {
+      if (lang === "ar") {
+        const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.45 } });
+        tl.from(sequence, { opacity: 0, y: 16, stagger: 0.06 });
+        return () => tl.kill();
+      }
       const split = new SplitText(headingLine1Ref.current, { type: "chars" });
       const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.6 } });
 
@@ -52,15 +62,17 @@ export default function HeroSection() {
     });
 
     return () => mm.revert();
-  }, []);
+  }, [lang, t]);
 
   return (
     <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-24 pb-0 text-white sm:pt-28 lg:min-h-[92vh]">
       <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         <div className="absolute -inset-[12%]">
           <img
-            src="https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=1920&q=80"
+            src="/hero.jpg"
             alt=""
+            fetchPriority="high"
+            decoding="async"
             className="h-full w-full object-cover object-center"
           />
         </div>
@@ -86,7 +98,7 @@ export default function HeroSection() {
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
           </span>
           <span className="text-left text-[10px] font-bold tracking-[0.12em] text-white/90 uppercase sm:text-[11px] sm:tracking-[0.2em]">
-            Saudi Arabia's trusted property marketplace
+            {t("Saudi Arabia's trusted property marketplace")}
           </span>
         </div>
 
@@ -94,7 +106,7 @@ export default function HeroSection() {
           <span
             ref={headingLine1Ref}
             className="block"
-            dangerouslySetInnerHTML={{ __html: "Find your home in the" }}
+            dangerouslySetInnerHTML={{ __html: t("Find your home in the") }}
           />
           <span
             ref={kingdomRef}
@@ -107,7 +119,7 @@ export default function HeroSection() {
               backgroundClip: "text",
             }}
           >
-            Kingdom
+            {t("Kingdom")}
           </span>
         </h1>
 
@@ -115,8 +127,7 @@ export default function HeroSection() {
           ref={descRef}
           className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/80 drop-shadow-md sm:mt-6 sm:text-lg md:text-xl"
         >
-          Resale villas, off-plan communities, and investment opportunities —
-          tailored for citizens, residents, and investors.
+          {t("Resale villas, off-plan communities, and investment opportunities — tailored for citizens, residents, and investors.")}
         </p>
 
         <div
@@ -127,7 +138,7 @@ export default function HeroSection() {
             href="/property"
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-500 px-7 py-3.5 font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-orange-600"
           >
-            View Details
+            {t("View Details")}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -148,7 +159,7 @@ export default function HeroSection() {
             href="/off-plan"
             className="inline-flex items-center justify-center rounded-lg border border-white/35 bg-white/8 px-7 py-3.5 font-semibold text-white backdrop-blur-md transition-all duration-200 hover:border-white/55 hover:bg-white/15"
           >
-            Register Interest
+            {t("Register Interest")}
           </a>
         </div>
 
@@ -158,19 +169,19 @@ export default function HeroSection() {
         >
           <div className="px-2 py-2 text-center">
             <p className="text-xl font-black text-white sm:text-2xl">500+</p>
-            <p className="mt-1 text-xs font-medium text-white/55">Verified listings</p>
+            <p className="mt-1 text-xs font-medium text-white/55">{t("Verified listings")}</p>
           </div>
           <div className="px-2 py-2 text-center">
             <p className="text-xl font-black text-white sm:text-2xl">6+</p>
-            <p className="mt-1 text-xs font-medium text-white/55">Major cities</p>
+            <p className="mt-1 text-xs font-medium text-white/55">{t("Major cities")}</p>
           </div>
           <div className="px-2 py-2 text-center">
             <p className="text-xl font-black text-white sm:text-2xl">FAL</p>
-            <p className="mt-1 text-xs font-medium text-white/55">Licensed brokerage</p>
+            <p className="mt-1 text-xs font-medium text-white/55">{t("Licensed brokerage")}</p>
           </div>
           <div className="px-2 py-2 text-center">
             <p className="text-xl font-black text-white sm:text-2xl">24/7</p>
-            <p className="mt-1 text-xs font-medium text-white/55">Expert guidance</p>
+            <p className="mt-1 text-xs font-medium text-white/55">{t("Expert guidance")}</p>
           </div>
         </div>
       </div>

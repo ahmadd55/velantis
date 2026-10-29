@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { LuFilter, LuLayoutGrid, LuMap } from "react-icons/lu";
 import FilterDrawer from "../components/FilterDrawer";
 import ListingCard from "../components/ListingCard";
@@ -7,18 +7,27 @@ import ListingsMap from "../components/ListingsMap";
 import PageHero from "../components/PageHero";
 import PriceAlert from "../components/PriceAlert";
 import { emptyFilters, filterListings, listings } from "../data/listings";
+import { useI18n } from "../i18n.jsx";
 
 export default function Listing() {
+  const { t } = useI18n();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const cityFromUrl = searchParams.get("city") ?? "";
   const [view, setView] = useState("grid");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [applied, setApplied] = useState(emptyFilters);
-  const [draft, setDraft] = useState(emptyFilters);
+  const [applied, setApplied] = useState({ ...emptyFilters, city: cityFromUrl });
+  const [draft, setDraft] = useState({ ...emptyFilters, city: cityFromUrl });
   const [selectedId, setSelectedId] = useState(listings[0].id);
   const navigate = useNavigate();
 
   const visible = useMemo(() => filterListings(listings, applied), [applied]);
   const countLabel = `${visible.length} ${visible.length === 1 ? "property" : "properties"} found`;
   const activeId = visible.some((item) => item.id === selectedId) ? selectedId : visible[0]?.id;
+
+  useEffect(() => {
+    setApplied((current) => (current.city === cityFromUrl ? current : { ...current, city: cityFromUrl }));
+    setDraft((current) => (current.city === cityFromUrl ? current : { ...current, city: cityFromUrl }));
+  }, [cityFromUrl]);
 
   const closeFilters = useCallback(() => setFiltersOpen(false), []);
 
@@ -30,11 +39,16 @@ export default function Listing() {
   const applyFilters = () => {
     setApplied(draft);
     setFiltersOpen(false);
+    const next = new URLSearchParams(searchParams);
+    if (draft.city) next.set("city", draft.city);
+    else next.delete("city");
+    setSearchParams(next, { replace: true });
   };
 
   const clearFilters = () => {
     setDraft(emptyFilters);
     setApplied(emptyFilters);
+    if (searchParams.get("city")) setSearchParams({}, { replace: true });
   };
 
   const viewListing = (id) => navigate(`/listings/${id}`);
@@ -54,8 +68,8 @@ export default function Listing() {
             <div className="flex flex-wrap items-center gap-3">
               <p className="text-sm font-medium text-slate-900 tabular-nums">{countLabel}</p>
               <div className="inline-flex rounded-xl bg-[#f3efe9] p-1">
-                <ToggleButton active={view === "grid"} onClick={() => setView("grid")} icon={<LuLayoutGrid className="h-4 w-4" />} label="Grid" />
-                <ToggleButton active={view === "map"} onClick={() => setView("map")} icon={<LuMap className="h-4 w-4" />} label="Map" />
+                <ToggleButton active={view === "grid"} onClick={() => setView("grid")} icon={<LuLayoutGrid className="h-4 w-4" />} label={t("Grid")} />
+                <ToggleButton active={view === "map"} onClick={() => setView("map")} icon={<LuMap className="h-4 w-4" />} label={t("Map")} />
               </div>
             </div>
             <button
@@ -64,15 +78,15 @@ export default function Listing() {
               className="inline-flex items-center gap-2 rounded-xl bg-black px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:opacity-90"
             >
               <LuFilter />
-              <span>Filters</span>
+              <span>{t("Filters")}</span>
             </button>
           </div>
 
           {visible.length === 0 ? (
             <div className="rounded-2xl bg-white px-6 py-16 text-center shadow-sm">
-              <p className="text-lg font-semibold text-slate-900">No properties match these filters</p>
+              <p className="text-lg font-semibold text-slate-900">{t("No properties match these filters")}</p>
               <button type="button" onClick={clearFilters} className="mt-4 text-sm font-semibold text-[#c4674a]">
-                Clear all filters
+                {t("Clear all filters")}
               </button>
             </div>
           ) : view === "grid" ? (

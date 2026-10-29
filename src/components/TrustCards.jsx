@@ -1,3 +1,5 @@
+import { useI18n } from "../i18n.jsx";
+
 const items = [
   {
     title: "FAL Licensed Brokers",
@@ -48,6 +50,7 @@ const items = [
 ];
 
 export default function TrustCards() {
+  const { t } = useI18n();
   return (
     <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {items.map((item) => (
@@ -59,8 +62,8 @@ export default function TrustCards() {
             {item.icon}
           </div>
           <div className="min-w-0">
-            <h2 className="text-sm font-semibold text-slate-900">{item.title}</h2>
-            <p className="mt-1 text-sm leading-relaxed text-slate-500">{item.desc}</p>
+            <h2 className="text-sm font-semibold text-slate-900">{t(item.title)}</h2>
+            <p className="mt-1 text-sm leading-relaxed text-slate-500">{t(item.desc)}</p>
           </div>
         </article>
       ))}

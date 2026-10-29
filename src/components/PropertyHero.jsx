@@ -2,8 +2,8 @@ import { LuSearch } from "react-icons/lu";
 import { LuMapPin } from "react-icons/lu";
 import { LuBuilding2 } from "react-icons/lu";
 import { LuArrowRight } from "react-icons/lu";
-import { useState } from "react";
 import TrustBar from "./TrustBar";
+import { useI18n } from "../i18n.jsx";
 
 const locations = [
   "Riyadh",
@@ -41,14 +41,19 @@ const propertyTypes = [
 const fieldClass =
   "h-12 w-full rounded-xl border border-slate-200 bg-white pr-3 pl-9 text-sm text-slate-800 focus:ring-2 focus:ring-amber-400 focus:outline-none";
 
-export default function PropertyHero() {
-  const [search, setSearch] = useState("");
-  const [location, setLocation] = useState("");
-  const [type, setType] = useState("");
-
+export default function PropertyHero({
+  search,
+  location,
+  type,
+  onSearchChange,
+  onLocationChange,
+  onTypeChange,
+  onSubmit,
+}) {
+  const { t } = useI18n();
   function handleSubmit(e) {
     e.preventDefault();
-    console.log({ search, location, type });
+    onSubmit();
   }
 
   return (
@@ -56,16 +61,15 @@ export default function PropertyHero() {
       <div className="px-4 pt-24 pb-10 sm:pt-28 md:pt-32 md:pb-14">
         <div className="mx-auto max-w-5xl text-center">
           <p className="mb-4 text-xs font-bold tracking-[0.22em] text-amber-400 uppercase sm:tracking-[0.3em]">
-            Resale & Ready Properties
+            {t("Resale & Ready Properties")}
           </p>
 
           <h1 className="mb-4 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl">
-            Find your property in Saudi Arabia
+            {t("Find your property in Saudi Arabia")}
           </h1>
 
           <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg md:mb-10">
-            Villas, apartments, land and commercial units — verified listings
-            across Riyadh, Jeddah, and the Eastern Province.
+            {t("Villas, apartments, land and commercial units — verified listings across Riyadh, Jeddah, and the Eastern Province.")}
           </p>
 
           <form
@@ -76,9 +80,9 @@ export default function PropertyHero() {
               <LuSearch className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
               <input
                 type="search"
-                placeholder="Search properties…"
+                placeholder={t("Search properties…")}
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => onSearchChange(e.target.value)}
                 className={`${fieldClass} placeholder-slate-400`}
               />
             </label>
@@ -87,13 +91,13 @@ export default function PropertyHero() {
               <LuMapPin className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
               <select
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={(e) => onLocationChange(e.target.value)}
                 className={`${fieldClass} appearance-none`}
               >
-                <option value="">Select location</option>
+                <option value="">{t("Select location")}</option>
                 {locations.map((loc) => (
                   <option key={loc} value={loc}>
-                    {loc}
+                    {t(loc)}
                   </option>
                 ))}
               </select>
@@ -103,13 +107,13 @@ export default function PropertyHero() {
               <LuBuilding2 className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
               <select
                 value={type}
-                onChange={(e) => setType(e.target.value)}
+                onChange={(e) => onTypeChange(e.target.value)}
                 className={`${fieldClass} appearance-none`}
               >
-                <option value="">Property Type</option>
+                <option value="">{t("Property Type")}</option>
                 {propertyTypes.map((pt) => (
                   <option key={pt} value={pt}>
-                    {pt}
+                    {t(pt)}
                   </option>
                 ))}
               </select>
@@ -119,7 +123,7 @@ export default function PropertyHero() {
               type="submit"
               className="flex h-12 items-center justify-center gap-2 rounded-xl bg-[#c4674a] px-6 text-sm font-semibold text-white sm:col-span-2 lg:col-span-1"
             >
-              Search properties
+              {t("Search properties")}
               <LuArrowRight className="h-4 w-4" />
             </button>
           </form>

@@ -105,13 +105,13 @@ export default function PropertyCard() {
             Email
           </a>
           <a
-            href="https://wa.me/966500000000"
+            href="https://wa.me/966533221625?text=Hi%2C%20I'm%20interested%20in%20Sedra%20%E2%80%94%20North%20Riyadh"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
-            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#c4674a] py-2.5 text-sm font-semibold text-white"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-green-600 px-3 py-2.5 text-sm font-bold text-white transition-colors hover:bg-green-700"
           >
-            <LuMessageCircle className="w-4 h-4" />
+            <LuMessageCircle className="h-4 w-4" />
           </a>
         </div>
       </div>

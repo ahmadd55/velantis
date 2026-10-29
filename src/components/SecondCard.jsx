@@ -1,4 +1,5 @@
 import { LuAward, LuCalendarCheck, LuHeadphones } from "react-icons/lu";
+import { useI18n } from "../i18n.jsx";
 
 const icons = {
   award: LuAward,
@@ -11,6 +12,7 @@ export default function SecondCard({
   title = "FAL-verified listings",
   text = "Every property is checked against Saudi REGA licensing standards.",
 }) {
+  const { t } = useI18n();
   const Icon = icons[icon] ?? LuAward;
 
   return (
@@ -20,8 +22,8 @@ export default function SecondCard({
           <Icon className="text-[#c4674a]" />
         </div>
         <div className="min-w-0">
-          <h3 className="font-semibold text-slate-800">{title}</h3>
-          <p className="mt-1 text-sm leading-relaxed text-[#6e6558]">{text}</p>
+          <h3 className="font-semibold text-slate-800">{t(title)}</h3>
+          <p className="mt-1 text-sm leading-relaxed text-[#6e6558]">{t(text)}</p>
         </div>
       </div>
     </div>

@@ -12,22 +12,25 @@ import {
 } from "react-icons/lu";
 import InterestForm from "../components/InterestForm";
 import { getListing } from "../data/listings";
+import { useI18n } from "../i18n.jsx";
 
 const phone = "tel:+966533221625";
 
 function Stat({ icon, label, value }) {
+  const { t } = useI18n();
   return (
     <div className="rounded-xl border border-black/10 bg-white p-4 shadow-sm">
       <div className="mb-2 flex items-center gap-2 text-[#c4674a]">
         {icon}
-        <span className="text-xs font-semibold tracking-wide text-gray-500 uppercase">{label}</span>
+        <span className="text-xs font-semibold tracking-wide text-gray-500 uppercase">{t(label)}</span>
       </div>
-      <p className="text-sm leading-snug font-semibold text-slate-900">{value}</p>
+      <p className="text-sm leading-snug font-semibold text-slate-900">{t(value)}</p>
     </div>
   );
 }
 
 export default function ListingDetail() {
+  const { t } = useI18n();
   const { id } = useParams();
   const listing = getListing(id);
   const [saved, setSaved] = useState(false);
@@ -39,9 +42,9 @@ export default function ListingDetail() {
   if (!listing) {
     return (
       <div className="bg-[#f7f4ef] px-4 pt-32 pb-28 text-center">
-        <h1 className="text-2xl font-bold text-slate-900">Listing not found</h1>
+        <h1 className="text-2xl font-bold text-slate-900">{t("Listing not found")}</h1>
         <Link to="/listings" className="mt-4 inline-block font-semibold text-[#c4674a]">
-          Browse properties
+          {t("Browse properties")}
         </Link>
       </div>
     );
@@ -58,20 +61,20 @@ export default function ListingDetail() {
   return (
     <div className="min-h-screen bg-[#f7f4ef] pt-20">
       <div className="relative h-64 w-full overflow-hidden md:h-96">
-        <img src={listing.image} alt={listing.title} className="absolute inset-0 h-full w-full object-cover" />
+        <img src={listing.image} alt={t(listing.title)} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 flex items-end bg-black/40">
           <div className="mx-auto w-full max-w-6xl px-4 pb-8">
             <span className="mb-3 inline-block rounded-full bg-[#d4a574] px-3 py-1 text-xs font-semibold text-slate-900">
-              {listing.category}
+              {t(listing.category)}
             </span>
-            <h1 className="text-3xl font-bold text-white md:text-5xl">{listing.title}</h1>
+            <h1 className="text-3xl font-bold text-white md:text-5xl">{t(listing.title)}</h1>
             <p className="mt-2 text-white/90">
-              {listing.type} · {listing.status}
+              {t(listing.type)} · {t(listing.status)}
             </p>
-            <p className="mt-1 text-2xl font-bold text-[#d4a574]">{listing.priceLabel}</p>
+            <p className="mt-1 text-2xl font-bold text-[#d4a574]">{t(listing.priceLabel)}</p>
             <button
               type="button"
-              aria-label={saved ? "Remove from saved" : "Save property"}
+              aria-label={saved ? t("Remove from saved") : t("Save property")}
               aria-pressed={saved}
               onClick={() => setSaved((value) => !value)}
               className="mt-3 grid h-9 w-9 place-items-center rounded-full bg-white/95 text-slate-700"
@@ -80,7 +83,7 @@ export default function ListingDetail() {
             </button>
             <p className="mt-3 flex items-start gap-2 text-white/90">
               <LuMapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              {listing.location}
+              {t(listing.location)}
             </p>
           </div>
         </div>
@@ -89,7 +92,7 @@ export default function ListingDetail() {
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-12 sm:px-6 lg:grid-cols-3 lg:px-8">
         <div className="space-y-8 lg:col-span-2">
           <section>
-            <h2 className="mb-4 text-xl font-bold text-slate-900">Property overview</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-900">{t("Property overview")}</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
               <Stat icon={<LuBedDouble className="h-4 w-4" />} label="Bedrooms" value={listing.beds} />
               <Stat icon={<LuBath className="h-4 w-4" />} label="Bathrooms" value={listing.baths} />
@@ -101,7 +104,7 @@ export default function ListingDetail() {
 
           <section className="rounded-2xl bg-white p-6 shadow-sm">
             <p className="text-xs font-semibold tracking-[0.16em] text-[#c4674a] uppercase">
-              Your licensed advisor
+              {t("Your licensed advisor")}
             </p>
             <div className="mt-4 flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-full bg-[#f7f4ef] text-slate-500">
@@ -114,37 +117,39 @@ export default function ListingDetail() {
                 </p>
               </div>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600">{advisorRole}</p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-600">{t(advisorRole)}</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <a
                 href={phone}
                 className="inline-flex items-center gap-2 rounded-lg border border-black/10 px-4 py-2.5 text-sm font-semibold text-slate-900"
               >
-                <LuPhone className="h-4 w-4" /> Call
+                <LuPhone className="h-4 w-4" /> {t("Call")}
               </a>
               <a
                 href={whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#c4674a] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#b3583d]"
               >
-                WhatsApp
+                {t("WhatsApp")}
               </a>
             </div>
           </section>
 
           <section>
-            <h2 className="mb-4 text-xl font-bold text-slate-900">About this property</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-900">{t("About this property")}</h2>
             <p className="leading-relaxed text-slate-600">
-              {listing.title} — exceptional property in {listing.city}, {listing.country}.{" "}
-              {listing.fal.includes("CIRE")
-                ? "Presented by Christie's International Real Estate."
-                : "Presented by a FAL-licensed Velantis advisor."}
+              {t(listing.title)} — {t(listing.city)}، {t(listing.country)}.{" "}
+              {t(
+                listing.fal.includes("CIRE")
+                  ? "Presented by Christie's International Real Estate."
+                  : "Presented by a FAL-licensed Velantis advisor.",
+              )}
             </p>
           </section>
 
           <section>
-            <h2 className="mb-4 text-xl font-bold text-slate-900">Location</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-900">{t("Location")}</h2>
             <div className="overflow-hidden rounded-xl border border-gray-200">
               <iframe
                 title="Map"
@@ -158,7 +163,10 @@ export default function ListingDetail() {
         </div>
 
         <aside>
-          <InterestForm whatsappHref={whatsapp} />
+          <InterestForm
+          whatsappHref={whatsapp}
+          whatsappClassName="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#c4674a] px-6 py-3 font-bold text-white transition-colors hover:bg-[#b3583d]"
+        />
         </aside>
       </div>
     </div>

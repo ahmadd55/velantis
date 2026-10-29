@@ -1,3 +1,5 @@
+import { useI18n } from "../i18n.jsx";
+
 const trustItems = [
   {
     id: 1,
@@ -93,6 +95,7 @@ const trustItems = [
 
 
 function TrustBar() {
+  const { t } = useI18n();
   return (
     <div className="w-full border-t border-white/12 bg-black backdrop-blur-xl">
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 px-4 py-4 sm:grid-cols-2 sm:px-5 sm:py-5 lg:grid-cols-4">
@@ -103,9 +106,9 @@ function TrustBar() {
             </div>
 
             <div className="min-w-0">
-              <p className="text-sm font-bold text-white">{item.title}</p>
+              <p className="text-sm font-bold text-white">{t(item.title)}</p>
               <p className="mt-0.5 text-xs leading-relaxed text-white/55">
-                {item.desc}
+                {t(item.desc)}
               </p>
             </div>
           </div>

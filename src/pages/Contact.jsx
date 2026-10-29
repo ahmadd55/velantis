@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LuMail, LuMapPin, LuPhone } from "react-icons/lu";
 import PageHero from "../components/PageHero";
+import { useI18n } from "../i18n.jsx";
 
 const interests = [
   { value: "prsaudia", label: "Ownership Leading to PR Saudia" },
@@ -17,6 +18,7 @@ const field =
   "w-full rounded-lg border border-black/10 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[#c4674a]";
 
 export default function Contact() {
+  const { t } = useI18n();
   const [form, setForm] = useState(initial);
   const [sent, setSent] = useState(false);
 
@@ -35,17 +37,14 @@ export default function Contact() {
         <div className="mx-auto grid max-w-6xl items-start gap-10 lg:grid-cols-5 lg:gap-14">
           <div className="space-y-6 lg:col-span-2">
             <div>
-              <h2 className="mb-3 text-2xl font-bold text-slate-900">Get in Touch</h2>
+              <h2 className="mb-3 text-2xl font-bold text-slate-900">{t("Get in Touch")}</h2>
               <p className="leading-relaxed text-slate-600">
-                We&apos;re here to help you navigate the Saudi Arabian property market. Whether
-                you&apos;re looking for your dream home, considering an investment, or have
-                questions about permanent residency through property ownership, our team is ready
-                to assist you.
+                {t("We're here to help you navigate the Saudi Arabian property market. Whether you're looking for your dream home, considering an investment, or have questions about permanent residency through property ownership, our team is ready to assist you.")}
               </p>
             </div>
 
             <div className="space-y-4 rounded-2xl bg-white p-6 shadow-sm">
-              <h3 className="font-bold text-slate-900">Saudi Arabia Office</h3>
+              <h3 className="font-bold text-slate-900">{t("Saudi Arabia Office")}</h3>
               <p className="flex items-center gap-3 text-sm text-slate-600">
                 <LuPhone className="h-4 w-4 shrink-0 text-[#c4674a]" aria-hidden="true" />
                 <a href="tel:+966533221625" dir="ltr">
@@ -61,12 +60,12 @@ export default function Contact() {
               </a>
               <p className="flex items-start gap-3 text-sm text-slate-600">
                 <LuMapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#c4674a]" aria-hidden="true" />
-                Riyadh, Saudi Arabia
+                {t("Riyadh, Saudi Arabia")}
               </p>
             </div>
 
             <div className="space-y-2 rounded-2xl bg-white p-6 shadow-sm">
-              <h3 className="font-bold text-slate-900">United Kingdom Office</h3>
+              <h3 className="font-bold text-slate-900">{t("United Kingdom Office")}</h3>
               <p className="text-sm font-semibold text-slate-900">A. Isaac</p>
               <p className="flex items-start gap-3 text-sm text-slate-600">
                 <LuMapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#c4674a]" aria-hidden="true" />
@@ -86,7 +85,7 @@ export default function Contact() {
           </div>
 
           <div className="rounded-2xl bg-white p-6 shadow-sm md:p-8 lg:col-span-3">
-            <h2 className="mb-6 text-xl font-bold text-slate-900">Send Us a Message</h2>
+            <h2 className="mb-6 text-xl font-bold text-slate-900">{t("Send Us a Message")}</h2>
             {sent ? (
               <p className="rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                 {`Thank you, ${form.name}. An advisor will be in touch${form.email ? ` at ${form.email}` : ""}.`}
@@ -102,7 +101,7 @@ export default function Contact() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-900">
-                      Name <span className="text-red-500">*</span>
+                      {t("Name")} <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="name"
@@ -110,13 +109,13 @@ export default function Contact() {
                       required
                       value={form.name}
                       onChange={update("name")}
-                      placeholder="Your full name"
+                      placeholder={t("Your full name")}
                       className={field}
                     />
                   </div>
                   <div>
                     <label htmlFor="interest" className="mb-1.5 block text-sm font-medium text-slate-900">
-                      Property Interest <span className="text-red-500">*</span>
+                      {t("Property Interest")} <span className="text-red-500">*</span>
                     </label>
                     <select
                       id="interest"
@@ -126,10 +125,10 @@ export default function Contact() {
                       onChange={update("interest")}
                       className={field}
                     >
-                      <option value="">Select your interest</option>
+                      <option value="">{t("Select your interest")}</option>
                       {interests.map((option) => (
                         <option key={option.value} value={option.value}>
-                          {option.label}
+                          {t(option.label)}
                         </option>
                       ))}
                     </select>
@@ -139,7 +138,7 @@ export default function Contact() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-slate-900">
-                      Phone <span className="text-red-500">*</span>
+                      {t("Phone")} <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="phone"
@@ -154,7 +153,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-900">
-                      Email
+                      {t("Email")}
                     </label>
                     <input
                       id="email"
@@ -170,7 +169,7 @@ export default function Contact() {
 
                 <div>
                   <label htmlFor="description" className="mb-1.5 block text-sm font-medium text-slate-900">
-                    Description
+                    {t("Description")}
                   </label>
                   <textarea
                     id="description"
@@ -178,7 +177,7 @@ export default function Contact() {
                     rows={4}
                     value={form.description}
                     onChange={update("description")}
-                    placeholder="Tell us more about your requirements and how we can help you…"
+                    placeholder={t("Tell us more about your requirements and how we can help you…")}
                     className={`${field} min-h-28 resize-none py-3`}
                   />
                 </div>
@@ -187,7 +186,7 @@ export default function Contact() {
                   type="submit"
                   className="rounded-lg bg-[#c4674a] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#b3583d]"
                 >
-                  Send Message
+                  {t("Send Message")}
                 </button>
               </form>
             )}

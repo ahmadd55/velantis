@@ -1,3 +1,5 @@
+import { properties } from "./properties";
+
 const photo = (id) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=80`;
 
@@ -310,7 +312,7 @@ export const listings = [
     fal: "FAL 550902",
     category: "COMMERCIAL",
     type: "Commercial",
-    image: "photo-1486406146926-c627a92ad1ab",
+    image: "photo-1600210491892-03d54c0aaf87",
     year: 2016,
     condition: "Old",
     facing: "North",
@@ -375,7 +377,7 @@ export const listings = [
     fal: "FAL 441776",
     category: "LAND",
     type: "Land",
-    image: "photo-1500382017468-9049fed747ef",
+    image: "photo-1600585153490-76fb20a32601",
     year: 2024,
     condition: "Other",
     facing: "South",
@@ -495,7 +497,12 @@ const atLeast = (value, min) => min === "" || value >= Number(min);
 const atMost = (value, max) => max === "" || value <= Number(max);
 
 export function getListing(id) {
-  return listings.find((listing) => String(listing.id) === String(id)) ?? null;
+  const key = String(id);
+  return (
+    listings.find((listing) => String(listing.id) === key) ??
+    properties.find((listing) => String(listing.id) === key) ??
+    null
+  );
 }
 
 export function filterListings(items, filters) {

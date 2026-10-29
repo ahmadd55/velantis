@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LuGlobe, LuMenu, LuPhone, LuX } from "react-icons/lu";
+import { useI18n } from "../i18n.jsx";
 
 const links = [
   { to: "/", label: "Home" },
@@ -42,6 +43,7 @@ function Logo({ onClick }) {
 
 export default function NavBar() {
   const { pathname } = useLocation();
+  const { t, lang, toggle } = useI18n();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -87,7 +89,7 @@ export default function NavBar() {
                   }
                   onClick={() => setOpen(false)}
                 >
-                  {link.label}
+                  {t(link.label)}
                 </Link>
               </li>
             );
@@ -97,10 +99,12 @@ export default function NavBar() {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
+            onClick={toggle}
             className="hidden items-center gap-2 md:flex"
+            aria-label={lang === "ar" ? "English" : "العربية"}
           >
             <LuGlobe />
-            <span>عربي</span>
+            <span>{lang === "ar" ? "English" : "عربي"}</span>
           </button>
 
           <a
@@ -115,7 +119,7 @@ export default function NavBar() {
             to="/contact-us"
             className="hidden rounded-lg bg-[#c4674a] px-3 py-2 text-sm font-semibold sm:inline-flex"
           >
-            Send Message
+            {t("Send Message")}
           </Link>
 
           <button
@@ -123,7 +127,7 @@ export default function NavBar() {
             className="grid h-11 w-11 place-items-center rounded-lg border border-white/15 xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t("Close menu") : t("Open menu")}
             onClick={() => setOpen((value) => !value)}
           >
             {open ? <LuX /> : <LuMenu />}
@@ -150,7 +154,7 @@ export default function NavBar() {
                     onClick={() => setOpen(false)}
                     className={`block rounded-lg px-3 py-3.5 text-base ${active ? "bg-[#1a3c34] text-white" : ""}`}
                   >
-                    {link.label}
+                    {t(link.label)}
                   </Link>
                 </li>
               );
@@ -158,9 +162,9 @@ export default function NavBar() {
           </ul>
 
           <div className="flex flex-col gap-3 px-4 py-4">
-            <button type="button" className="flex items-center gap-2 py-1 md:hidden">
+            <button type="button" onClick={toggle} className="flex items-center gap-2 py-1 md:hidden">
               <LuGlobe />
-              <span>عربي</span>
+              <span>{lang === "ar" ? "English" : "عربي"}</span>
             </button>
             <a
               href="tel:+966533221625"
@@ -174,7 +178,7 @@ export default function NavBar() {
               onClick={() => setOpen(false)}
               className="rounded-lg bg-[#c4674a] px-4 py-3 text-center text-sm font-semibold"
             >
-              Send Message
+              {t("Send Message")}
             </Link>
           </div>
         </div>
